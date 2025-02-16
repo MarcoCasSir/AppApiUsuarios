@@ -1,1 +1,22 @@
 
+<section class="container mt-3">
+    <div class="card shadow p-3" >
+        <div class="row">
+            <figure class="col-12 col-md-3">
+                <img class="img-fluid rounded-start" [src]="miUsuario.image" alt="Foto de usuario">
+            </figure>
+            
+            <div class="col-12 col-md-9">
+                <h2>{{miUsuario.first_name}}</h2>
+                <hr>
+                <h3>{{miUsuario.last_name}}</h3>
+                <hr>
+                <p>Nombre Usuario: {{miUsuario.username}}</p>
+                <p>Email: {{miUsuario.email}}</p>
+
+                    <app-botones [parent]="'view'" [_id]="miUsuario._id"></app-botones>
+            </div>
+        </div>
+    </div>
+
+</section>

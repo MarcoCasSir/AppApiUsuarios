@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { lastValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UsuarioService {
 
   httpClient =inject(HttpClient);
 
-  private baseUrl: string = 'https://peticiones.online/api/users ';  
+  private baseUrl: string = 'https://peticiones.online/api/users';  
 
   constructor() {
   }
@@ -23,9 +23,14 @@ getAllWithObservables(): Observable<any> {
 }
 
 
-getById (_id: string): Observable <Usuario> {
-  return this.httpClient.get<Usuario>(`${this.baseUrl}/${_id}`);
+
+
+getById(_id: string) : Promise <Usuario> {
+
+  return firstValueFrom (this.httpClient.get<Usuario>(`${this.baseUrl}/${_id}`))
 }
+
+
 
 
 }
