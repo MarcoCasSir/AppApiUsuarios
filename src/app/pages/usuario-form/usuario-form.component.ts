@@ -22,7 +22,7 @@ export class UsuarioFormComponent {
   tipo : string;
 
   constructor(){
-    this.tipo = "NUEVO USUARIO";
+    this.tipo = "NUEVO";
 
     this.usuarioForm= new FormGroup ( {
       first_name: new FormControl('', [Validators.required]),
@@ -36,7 +36,7 @@ export class UsuarioFormComponent {
 ngOnInit (): void {
     this.activedRoute.params.subscribe(async (params:any) => {
       if (params._id){
-        this.tipo = "ACTUALIZAR USUARIO";
+        this.tipo = "ACTUALIZAR";
         const response = await this.usuarioService.getById(params._id);
 
         this.usuarioForm= new FormGroup ( {

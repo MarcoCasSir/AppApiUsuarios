@@ -18,12 +18,6 @@ export class UsuarioService {
   }
 
 
-getAllWithObservables(): Observable<any> {
-  return this.httpClient.get<any>(this.baseUrl);
-}
-
-
-
 
 getById(_id: string) : Promise <Usuario> {
 
@@ -31,6 +25,17 @@ getById(_id: string) : Promise <Usuario> {
 }
 
 
+insert( usuario: Usuario): Promise<Usuario>{
+  return firstValueFrom(this.httpClient.post<Usuario>( this.baseUrl, usuario))
+}
+
+update( usuario: Usuario): Promise<Usuario>{
+  return firstValueFrom(this.httpClient.put<Usuario>( this.baseUrl+ "/" + usuario._id, usuario));
+}
+
+delete( usuario: Usuario): Promise<Usuario>{
+  return firstValueFrom(this.httpClient.delete<Usuario>( this.baseUrl+ "/" + usuario._id));
+}
 
 
 }
