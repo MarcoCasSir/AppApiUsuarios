@@ -2,17 +2,19 @@ import { Component, inject } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Usuario } from '../../interfaces/usuario';
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.css'
 })
 export class UsuarioFormComponent {
 
 
+ 
   usuarioService = inject (UsuarioService);
   router = inject (Router);
   activedRoute = inject (ActivatedRoute);
@@ -47,7 +49,7 @@ ngOnInit (): void {
           _id: new FormControl ( response._id, []),
           first_name: new FormControl(response.first_name, [Validators.required]),
           last_name: new FormControl(response.last_name, [Validators.required]),
-          email: new FormControl(response.email, [Validators.required]),
+          email: new FormControl(response.email, [Validators.required, Validators.email]),
           image: new FormControl(response.image, [Validators.required]),
         } , 
         []);
@@ -57,9 +59,30 @@ ngOnInit (): void {
 }
 
 
-getDataForm() {
-  
+async getDataForm() {   
+
+  try{
+    let user: Usuario = this.usuarioForm.value as Usuario;   
+
+    if ( this.boton == 'GUARDAR'){    
+      let response = await this.usuarioService.insert(user);
+      alert(`Se ha guardado correctamente`);
+      this.usuarioForm.reset(); 
+    }
+    else {  
+        let response = await this.usuarioService.update(user);         
+        if (response.error) {
+            alert(`Error: `+ response.error);
+            return; 
+        }        
+        else(response._id) 
+            alert(`Se ha actualizado correctamente el usuario: `+ response.first_name);           
+      }
+    
+  }   
+    catch (erro){
+      alert('Ha habido un problema de comunicacion');
+    }
+
   }
-
-
 }
