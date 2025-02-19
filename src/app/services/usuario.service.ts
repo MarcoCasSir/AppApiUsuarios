@@ -19,6 +19,11 @@ export class UsuarioService {
 
 
 
+getAllWithObservables(): Observable<any>{
+  return this.httpClient.get<any>(this.baseUrl);
+}
+
+
 getById(_id: string) : Promise <Usuario> {
 
   return firstValueFrom (this.httpClient.get<Usuario>(`${this.baseUrl}/${_id}`))
@@ -33,8 +38,8 @@ update( usuario: Usuario): Promise<Usuario>{
   return firstValueFrom(this.httpClient.put<Usuario>( this.baseUrl+ "/" + usuario._id, usuario));
 }
 
-delete( usuario: Usuario): Promise<Usuario>{
-  return firstValueFrom(this.httpClient.delete<Usuario>( this.baseUrl+ "/" + usuario._id));
+delete(_id : string): Promise<Usuario>{
+  return firstValueFrom(this.httpClient.delete<Usuario>( `${this.baseUrl}/${_id}`));
 }
 
 

@@ -1,5 +1,5 @@
 
-export interface Usuario {
+export interface Usuario {   
     _id: string,
     id?: number,
     first_name: string,
@@ -8,5 +8,7 @@ export interface Usuario {
     email: string,
     image: string,
     password: string
+
+    error: string;
     
 }

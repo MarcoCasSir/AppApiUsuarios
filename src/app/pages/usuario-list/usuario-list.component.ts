@@ -20,8 +20,8 @@ export class UsuarioListComponent {
     this.arrUsuario= [];
   }
 
-  ngOnInit():void {
-    this.usuarioService.getAllWithObservables().subscribe((data) => {
+  ngOnInit():void {       
+      this.usuarioService.getAllWithObservables().subscribe((data) => {
       this.arrUsuario = data.results;
     });
   }

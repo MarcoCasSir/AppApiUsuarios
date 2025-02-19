@@ -14,7 +14,7 @@ export class BotonesComponent {
   usuarioService = inject(UsuarioService);
   router = inject (Router);
 
-  @Input() _id : string;
+  @Input() _id: string;
   @Input() parent: string;
 
   constructor(){
@@ -22,10 +22,34 @@ export class BotonesComponent {
     this.parent= "";
   }
 
-  borrarUsuario(_id:string) {
+  async borrarUsuario(_id: string) {
+    let confirmacion = confirm(` Quieres borrar al usuario: ` + this._id);
 
-    // llamara al servicio donde trendremos la funcion de borrar
+    if (confirmacion) {        
+        try {
+            let response = await this.usuarioService.delete(_id); 
 
-  }
-
+            if (response.error) {
+                alert(`Error: `+ response.error);
+                return; 
+            }
+            
+            if (response._id) {
+                alert(`Se ha borrado correctamente el usuario: `+ response.first_name);                
+                
+                if (this.parent === 'view') {
+                    this.router.navigate(['/home']);
+                } else {
+                    location.reload();
+                }
+            } else {
+                alert('La confirmacion no es validad');
+            }
+        } catch (error) {
+            alert('Ha habido un problema de comunicacion');
+        }
+    }
 }
+
+
+} 

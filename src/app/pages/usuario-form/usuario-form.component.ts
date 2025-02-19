@@ -21,8 +21,11 @@ export class UsuarioFormComponent {
 
   tipo : string;
 
+  boton: string;
+
   constructor(){
     this.tipo = "NUEVO";
+    this.boton= "GUARDAR";
 
     this.usuarioForm= new FormGroup ( {
       first_name: new FormControl('', [Validators.required]),
@@ -37,6 +40,7 @@ ngOnInit (): void {
     this.activedRoute.params.subscribe(async (params:any) => {
       if (params._id){
         this.tipo = "ACTUALIZAR";
+        this.boton= "ACTUALIZAR";
         const response = await this.usuarioService.getById(params._id);
 
         this.usuarioForm= new FormGroup ( {
